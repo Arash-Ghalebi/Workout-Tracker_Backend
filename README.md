@@ -1,0 +1,2 @@
+# Workout-Tracker_Backend
+A fullstack web application that provides users with a comprehensive, easy-to-use interface to schedule their workouts for the month, keep track of their personal weight lifting records, track their weight and have it display on a graph over time, and have access to a list of exercises for various muscle groups. Utilizes a React.js frontend, a Python Django Rest API backend, a MySQL database, and is connected to an external API for the calendar function.
