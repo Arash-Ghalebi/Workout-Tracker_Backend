@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication.apps.AuthenticationConfig',
     'corsheaders',
-    'cars.apps.CarsConfig',
+    # 'cars.apps.CarsConfig',
+    'exercises.apps.ExercisesConfig',
+    'exerciseactivities.apps.ExerciseactivitiesConfig',
+    'bodyweights.apps.BodyweightsConfig',
 ]
 
 MIDDLEWARE = [
