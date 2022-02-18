@@ -22,5 +22,6 @@ urlpatterns = [
     # path('api/cars/', include('cars.urls')),
     path('exercises/', include('exercises.urls')),
     path('exerciseactivities/', include('exerciseactivities.urls')),
-    path('bodyweights/', include('bodyweights.urls'))
+    path('bodyweights/', include('bodyweights.urls')),
+    path('calendar/', include('events.urls'))
 ]

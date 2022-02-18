@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'exercises.apps.ExercisesConfig',
     'exerciseactivities.apps.ExerciseactivitiesConfig',
     'bodyweights.apps.BodyweightsConfig',
+    'events.apps.EventsConfig',
 ]
 
 MIDDLEWARE = [

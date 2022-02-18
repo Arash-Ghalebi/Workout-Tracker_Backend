@@ -7,6 +7,7 @@ from .models import ExerciseActivity
 from .serializers import ExerciseActivitySerializer
 from django.conf import settings
 from django.http.response import Http404
+from django.db.models import Max
 
 User = settings.AUTH_USER_MODEL
 
@@ -21,7 +22,7 @@ User = settings.AUTH_USER_MODEL
 @permission_classes([AllowAny])
 def add_weight(request):
     if request.method == 'POST':
-        serializer = ExerciseActivitySerializer(data=request.data)
+        serializer = ExerciseActivitySerializer(data=request.data, many=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -29,8 +30,29 @@ def add_weight(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_weight(request, fk):
-    records = ExerciseActivity.objects.filter(user_id=fk)  
+def get_all_squat(request, fk):
+    records = ExerciseActivity.objects.filter(user_id=fk, exercise_id=6).order_by('weight_date')  
+    serializer = ExerciseActivitySerializer(records, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_all_bench(request, fk):
+    records = ExerciseActivity.objects.filter(user_id=fk, exercise_id=3).order_by('weight_date')    
+    serializer = ExerciseActivitySerializer(records, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_all_bent(request, fk):
+    records = ExerciseActivity.objects.filter(user_id=fk, exercise_id=4).order_by('weight_date')    
+    serializer = ExerciseActivitySerializer(records, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_all_overhead(request, fk):
+    records = ExerciseActivity.objects.filter(user_id=fk, exercise_id=5).order_by('weight_date')    
     serializer = ExerciseActivitySerializer(records, many=True)
     return Response(serializer.data)
 
@@ -47,10 +69,41 @@ def delete_weight(request, pk):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_one_weight(request, pk):
+def get_squat_max(request, pk):
     try:
-        comment = ExerciseActivity.objects.get(id=pk)
-        serializer  = ExerciseActivitySerializer(comment)
+        comment = ExerciseActivity.objects.filter(user_id=pk, exercise_id=6)
+        comment2 = comment.order_by('-weight_amount')[0]
+        serializer  = ExerciseActivitySerializer(comment2)
+        return Response(serializer.data)
+    except ExerciseActivity.DoesNotExist:
+        raise Http404
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_bench_max(request, pk):
+    try:
+        comment = ExerciseActivity.objects.filter(user_id=pk, exercise_id=3)
+        comment2 = comment.order_by('-weight_amount')[0]
+        serializer  = ExerciseActivitySerializer(comment2)
+        return Response(serializer.data)
+    except ExerciseActivity.DoesNotExist:
+        raise Http404
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_bent_max(request, pk):
+    try:
+        comment = ExerciseActivity.objects.filter(user_id=pk, exercise_id=4)
+        comment2 = comment.order_by('-weight_amount')[0]
+        serializer  = ExerciseActivitySerializer(comment2)
+        return Response(serializer.data)
+    except ExerciseActivity.DoesNotExist:
+        raise Http404
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_overhead_max(request, pk):
+    try:
+        comment = ExerciseActivity.objects.filter(user_id=pk, exercise_id=5)
+        comment2 = comment.order_by('-weight_amount')[0]
+        serializer  = ExerciseActivitySerializer(comment2)
         return Response(serializer.data)
     except ExerciseActivity.DoesNotExist:
         raise Http404
